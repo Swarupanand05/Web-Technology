@@ -14,3 +14,4 @@ console.log(typeof(name));
 console.log(typeof(b));
 console.log(typeof(c));  //for null it will show type of object
 console.log(typeof(d));
+
