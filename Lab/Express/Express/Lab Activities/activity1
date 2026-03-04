@@ -1,0 +1,85 @@
+----ACTIVITY ANSWERS----
+1. What is package.json?
+
+It is the main configuration file of a Node.js project.
+
+It contains-
+Project name and version
+Description
+Scripts (start, test, etc.)
+Dependencies and devDependencies
+It helps to manage project packages.
+
+It is created using-
+npm init.Without this file, npm cannot manage packages properly.
+
+2. Difference between package.json and package-lock.json
+
+--- package.json
+Created by developer.
+Contains project details.
+Lists required packages.
+Shows version range (example: ^4.2.0).
+Can be edited manually.
+
+--- package-lock.json
+Automatically created by npm.
+Locks exact installed versions.
+Ensures same installation for all users.
+Should not be edited manually.
+
+Simple difference-
+package.json = What we want to install.
+package-lock.json = What exactly got installed.
+
+3. Dependency vs Dev Dependency
+
+--- Dependency
+Required to run the application.
+Installed using - npm install package-name
+
+--- Dev Dependency
+Required only during development.
+Not needed in production.
+Installed using- npm install package-name --save-dev
+
+
+4. HTTP Requests 
+
+---GET
+Used to fetch data from server.
+Does not change data.
+Example: Viewing products on Amazon.
+
+---POST
+Used to send new data to server.
+Creates new resource.
+Example: Creating a new account.
+
+---PUT
+Used to update full data.
+Replaces entire resource.
+Example: Updating complete user profile.
+
+---PATCH
+Used to update partial data.
+Modifies only selected fields.
+Example: Changing only email.
+
+---DELETE
+Used to remove data.
+Example: Deleting product from cart.
+
+
+5. Steps to Create an Express Project
+-->
+1. Install Node.js.
+2.Create a new folder
+3.Initialize npm- npm init -y
+4.Install Express- npm install express
+5.Create index.js file.
+6.Write basic Express server code.
+7.Run project- node index.js
+8.Open browser and go to- http://localhost:3000
+
+*/
