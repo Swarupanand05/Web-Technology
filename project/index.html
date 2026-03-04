@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>To-Do List App</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>BMI Calculator</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h2>To-Do List </h2>
 
-        <div class="input-box">
-            <input type="text" id="taskInput" placeholder="Enter your task...">
-            <button onclick="addTask()">Add</button>
-        </div>
+<div class="container">
+<h2>BMI Calculator</h2>
 
-        <ul id="taskList"></ul>
-    </div>
+<label>Height (cm)</label>
+<input type="number" id="height" placeholder="Enter height">
 
-    <script src="script.js"></script>
+<label>Weight (kg)</label>
+<input type="number" id="weight" placeholder="Enter weight">
+
+<button onclick="calculateBMI()">Calculate BMI</button>
+
+<div id="result"></div>
+<div id="error"></div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>

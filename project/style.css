@@ -1,71 +1,50 @@
-* {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+body{
+font-family: Arial;
+background:#e3f2fd;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
 
-body {
-    background: #e3f2fd;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+.container{
+background:white;
+padding:30px;
+width:320px;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
 
-.container {
-    background: white;
-    padding: 25px;
-    width: 350px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+h2{
+text-align:center;
 }
 
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
+input{
+width:100%;
+padding:10px;
+margin:8px 0;
+border-radius:5px;
+border:1px solid #ccc;
 }
 
-.input-box {
-    display: flex;
+button{
+width:100%;
+padding:10px;
+background:#1976d2;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
 }
 
-.input-box input {
-    flex: 1;
-    padding: 10px;
-    border-radius: 5px;
-    outline: none;
-    border: 1px solid #aaa;
+#result{
+margin-top:15px;
+font-weight:bold;
+text-align:center;
 }
 
-.input-box button {
-    padding: 10px 15px;
-    margin-left: 5px;
-    background: #1976d2;
-    border: none;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-#taskList {
-    margin-top: 20px;
-    list-style: none;
-}
-
-#taskList li {
-    padding: 10px;
-    background: #f1f1f1;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.delete-btn {
-    color: white;
-    background: red;
-    border: none;
-    padding: 5px 8px;
-    border-radius: 4px;
-    cursor: pointer;
+#error{
+color:red;
+text-align:center;
+margin-top:10px;
 }

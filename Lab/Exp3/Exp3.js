@@ -115,4 +115,19 @@ do {
 } while (k <= 5);
 document.write("<br>");
 
+//how to use map and filter function in javascript 
+// Map Function
+const numbers = [1, 2, 3, 4, 5];
+const squaredNumbers = numbers.map(num => num * num);
+document.write("Squared Numbers: " + squaredNumbers.join(", ") + "<br>");
+
+
+// Filter Function
+const evenNumbers = numbers.filter(num => num % 2 === 0);
+document.write("Even Numbers: " + evenNumbers.join(", ") + "<br>");
+
+//how to use reduce function in javascript
+const sum = numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+document.write("Sum of Numbers: " + sum + "<br>");
+
 
