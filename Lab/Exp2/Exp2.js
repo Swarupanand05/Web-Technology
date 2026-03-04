@@ -21,14 +21,12 @@ var arr = [1, 2, 3, 4, 5];
 function displayArray(array) {
     return array;
 }
-document.write("<br>Array: " + displayArray(arr));
+console.log("Array: " + displayArray(arr));
 
 
 var obj = { name: "John", age: 30 };
-document.write("<br> Name - " + obj.name + "<br> Age - " + obj.age);
-document.write("<br>");
-document.write("<br>");
-document.write("<br>");
+console.log(" Name - " + obj.name + " Age - " + obj.age);
+
 
 //write a code for reversse number
 function reverseNumber(num) {
@@ -41,10 +39,9 @@ function reverseNumber(num) {
     return reversed;
 }
 var numberToReverse = 12345;
-document.write("<br>Reversed Number of " + numberToReverse + " is: " + reverseNumber(numberToReverse));
+console.log("Reversed Number of " + numberToReverse + " is: " + reverseNumber(numberToReverse));
 
-document.write("<br>");
-document.write("<br>");
+
 
 //check number paloindrome or not
 
@@ -59,29 +56,27 @@ while (temp > 0) {
 
 // compare original and reversed number
 if (originalnum === reversenum) {
-    document.write(originalnum + "<br>Number is palindrome");
+    console.log(originalnum + "Number is palindrome");
 } else {
-    document.write(originalnum + "<br>Number is not palindrome");
+    console.log(originalnum + "Number is not palindrome");
 }
 
 
-document.write("<br>");
-document.write("<br>");
+
 
 //write code for fibonacci series
 
 let a=0,b=1;
 let n=3;
-document.write(a)
-document.write(b)
+console.log(a)
+console.log(b)
 for(let i=0;i<n;i++){
     let c = a+b;
-    document.write("<br>" + c);
+    console.log( + c);
     a = b;
     b = c;
 }
-document.write("<br>");
-document.write("<br>");
+
 
 //find largest element in an array
 
@@ -95,17 +90,15 @@ for (let i = 1; i < arr5.length; i++) {
   }
 }
 
-document.write("<br>Largest element: " + largest);
-document.write("<br>");
-document.write("<br>");
+console.log("Largest element: " + largest);
+
 
 //remove duplicate from array
 
 let arrayWithDuplicates = [1, 2, 2, 3, 4, 4, 5];
-let uniqueArray = [...new Set(arrayWithDuplicates)];    
-document.write("<br>Array without duplicates: " + uniqueArray);
-document.write("<br>");
-document.write("<br>");
+let uniqueArray = [...new Set(arrayWithDuplicates)];
+console.log("Array without duplicates:", uniqueArray);
+
 
 //find missing number in array
 
@@ -115,22 +108,19 @@ let expectedSum = (s * (s + 1)) / 2;
 let actualSum = arr.reduce((a, b) => a + b, 0);
 let missingNumber = expectedSum - actualSum;
 
-document.write("Missing number is: " + missingNumber);
-document.write("<br>");
-document.write("<br>");
-document.write("")
+console.log("Missing number is: " + missingNumber);
+
 //write a code for reverse string
 
   let str = "Swarupanand";
-  let reversed = "";
+  let reversed = " ";
 
   for (let i = str.length - 1; i >= 0; i--) {
     reversed += str[i];
   }
-  document.write("<br>Reversed String: " + reversed);
+  console.log("Reversed String: " + reversed);
 
-document.write("<br>");
-document.write("<br>");
+
 
 //count vowels in a string
 let string = "Hello World";
@@ -142,21 +132,19 @@ for (let i = 0; i < string.length; i++) {
     vowelCount++;
   }
 }
-document.write("<br>Number of vowels: " + vowelCount);
-document.write("<br>");
-document.write("<br>");
+console.log("Number of vowels: " + vowelCount);
+
 
 //check string is palindrome or not
 let str1 = "madam"; 
 let reversedStr = str1.split('').reverse().join('');
 
 if (str1 === reversedStr) {
-    document.write("<br>String is palindrome");
+    console.log("String is palindrome");
 } else {
-    document.write("<br>String is not palindrome");
+    console.log("String is not palindrome");
 }
-document.write("<br>");
-document.write("<br>");
+
 
 //Check prime number or not
 let num = 29;
@@ -172,12 +160,11 @@ for (let i = 2; i <= Math.sqrt(num); i++) {
 }
 
 if (isPrime) {
-    document.write("<br>" + num + " is a prime number");
+    console.log( + num + " is a prime number");
 } else {
-    document.write("<br>" + num + " is not a prime number");
+    console.log( + num + " is not a prime number");
 }
-document.write("<br>");
-document.write("<br>");
+
 
 //find factorial of a number
 let number = 5;
@@ -185,12 +172,11 @@ let factorial = 1;
 for (let i = 1; i <= number; i++) {
     factorial *= i;
 }
-document.write("<br>Factorial of " + number + " is " + factorial);
-document.write("<br>");
-document.write("<br>");
+console.log("Factorial of " + number + " is " + factorial);
+
 
 //Write a function code to check number is even or odd
-function checkEvenOdd(num) {
+function EvenOdd(num) {
     if (num % 2 === 0) {
         return "Even";
     } else {
@@ -199,9 +185,8 @@ function checkEvenOdd(num) {
 }
 
 let numberToCheck = 7;
-document.write("<br>" + numberToCheck + " is " + checkEvenOdd(numberToCheck));
-document.write("<br>");
-document.write("<br>");
+console.log( + numberToCheck + " is " + EvenOdd(numberToCheck));
+
 
 //write a function to calculate sum of array elements
 
@@ -213,6 +198,6 @@ function sumOfArray(arr) {
     return sum;
 }
 let arrayToSum = [1, 2, 3, 4, 5];
-document.write("<br>Sum of array elements: " + sumOfArray(arrayToSum));
-document.write("<br>");
-document.write("<br>");
+console.log("Sum of array elements: " + sumOfArray(arrayToSum));
+console.log();
+console.log();
