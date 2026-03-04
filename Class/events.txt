@@ -1,0 +1,44 @@
+//What is an event?
+//An event is an action that happens in a browser
+//Examples of events:
+//1. Click
+//2. Mouseover
+//3. Keydown
+// 4 . pressing a key
+//Submitting a form
+// loading Photographer
+
+//js detect this events and respond to them
+
+//Types of events
+//1) Mouse event---Click, double click, mouseover,mouseout
+//2) Keyboard event--keydown, keyup, 
+// 3) Browser Events
+
+//onclick="alert('Hi')"
+this is not good way html should contain structure and js contain contain logic
+//mixing both is bad practice
+//on basic level this should be good but not useful in large project
+
+//Select elements 
+//Assign function to click event
+//when click functions runs
+
+
+document.getElementById('japan').onclick = function(){
+        alert('Hello from Japan!');
+    }
+
+//Home Assignment
+1) jquery
+2) type ,type stamp, default preventor,target, source elements, current tag, client x, client y, scrren x, screen y
+alt , ctr, shift key,
+
+//Addevent listener
+it is js method used to attach an event handler to an html elemnts so that specific function runs when that event occurs
+
+
+//inner elements to the parent 
+if photo shop image is clicked 
+
+//Home activity
