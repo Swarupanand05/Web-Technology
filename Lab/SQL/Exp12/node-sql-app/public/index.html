@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Manager</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        input { margin: 5px; padding: 8px; }
+        button { padding: 8px 12px; margin: 5px; }
+        table { border-collapse: collapse; margin-top: 20px; }
+        td, th { border: 1px solid black; padding: 8px; }
+    </style>
+</head>
+<body>
+
+<h2>🎓 Student Manager</h2>
+
+<!-- FORM -->
+<input type="text" id="name" placeholder="Name">
+<input type="number" id="age" placeholder="Age">
+<input type="text" id="course" placeholder="Course">
+
+<button onclick="addStudent()">Add Student</button>
+
+<br><br>
+
+<button onclick="loadStudents()">Show Students</button>
+
+<!-- TABLE -->
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Course</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="studentTable"></tbody>
+</table>
+
+<script>
+
+// ➕ ADD STUDENT
+function addStudent() {
+    fetch("/students", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: document.getElementById("name").value,
+            age: document.getElementById("age").value,
+            course: document.getElementById("course").value
+        })
+    })
+    .then(res => res.text())
+    .then(data => {
+        alert(data);
+        loadStudents();
+    });
+}
+
+// 📖 LOAD STUDENTS
+function loadStudents() {
+    fetch("/students")
+    .then(res => res.json())
+    .then(data => {
+        let table = "";
+        data.forEach(student => {
+            table += `
+                <tr>
+                    <td>${student.id}</td>
+                    <td>${student.name}</td>
+                    <td>${student.age}</td>
+                    <td>${student.course}</td>
+                    <td>
+                        <button onclick="deleteStudent(${student.id})">Delete</button>
+                        <button onclick="updateStudent(${student.id})">Update</button>
+                    </td>
+                </tr>
+            `;
+        });
+        document.getElementById("studentTable").innerHTML = table;
+    });
+}
+
+// ❌ DELETE
+function deleteStudent(id) {
+    fetch(`/students/${id}`, {
+        method: "DELETE"
+    })
+    .then(() => {
+        alert("Deleted");
+        loadStudents();
+    });
+}
+
+// ✏️ UPDATE
+function updateStudent(id) {
+    const name = prompt("Enter new name:");
+    const age = prompt("Enter new age:");
+    const course = prompt("Enter new course:");
+
+    fetch(`/students/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name, age, course })
+    })
+    .then(() => {
+        alert("Updated");
+        loadStudents();
+    });
+}
+
+</script>
+
+</body>
+</html>

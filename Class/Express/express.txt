@@ -1,0 +1,60 @@
+What is Express ?
+=>Express is backend technology
+=>Express is minimal and flexible web application framework for node.js.That simplifies the development of web servers and API.
+
+=>Features
+1)Routing
+2)Middleware Support
+3)request and response  handling
+4)REST api creation
+5)Template rendoring
+
+
+npm=>Node package manager
+
+Steps to install Express
+1)npm -v
+2)npm init
+3)npm install express
+4)CReate a file index.js
+5) Run node index.js
+or
+nodeman index.js
+
+
+Activity
+1)Difference bw package.json and package-lock.json
+package.json is configuration file in which details
+2) Difference b/w devdependencies and devdependencies
+3)https request
+Get -data from user
+POST-add new record
+put-update the record
+delete- delete the record
+//create a department name home page 
+/cse
+/mechanical
+/civil
+/AIML
+/AIDS
+
+
+
+**Routing in express.js**
+Routing referes to determinig , how  an application respond to the client request for a specific URL an HTTP method
+
+app.get('/', (req, res) => {// '/' represent routes
+  res.send('Hello World!')
+})
+
+in above code '/ ' represnt home page
+
+Components of Routing
+URL path
+HTTP method
+Handeler function
+
+
+**Middleware
+=> Middleware functions are function that executes during the lifecycle of request before sending the final response.
+=>They have access to request, response and next .

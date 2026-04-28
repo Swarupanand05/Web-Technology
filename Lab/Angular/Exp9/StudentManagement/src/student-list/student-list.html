@@ -1,0 +1,34 @@
+<div class="container" style="padding: 20px;">
+    <!-- 1. INTERPOLATION: Binding the title from component property -->
+    <h2>{{ title }}</h2>
+    
+    <!-- 2. PROPERTY BINDING: We can dynamically apply styles. Here we bind to [style.color] -->
+    @if (students().length === 0) {
+        <p [style.color]="'red'">No students found. Please add a student.</p>
+    } @else {
+        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Name</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Age</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Course</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (student of students(); track $index) {
+                    <tr>
+                        <!-- 1. INTERPOLATION: Displaying the dynamic data from the student object -->
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{ student.name }}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{ student.age }}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{ student.course }}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">
+                            <!-- 3. EVENT BINDING: (click) triggers the viewStudent method -->
+                            <button (click)="viewStudent(student)">View</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

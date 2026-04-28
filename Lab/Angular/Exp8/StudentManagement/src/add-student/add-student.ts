@@ -1,0 +1,25 @@
+import { Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { StudentService } from '../app/student.service';
+
+@Component({
+  selector: 'app-add-student',
+  imports: [FormsModule],
+  templateUrl: './add-student.html',
+  styleUrl: './add-student.css',
+})
+export class AddStudent {
+  studentService = inject(StudentService);
+
+  name = '';
+  age: number | null = null;
+
+  onSubmit() {
+    if (this.name && this.age) {
+      this.studentService.addStudent({ name: this.name, age: this.age });
+      alert('Student added successfully!');
+      this.name = '';
+      this.age = null;
+    }
+  }
+}

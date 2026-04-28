@@ -1,0 +1,40 @@
+<div class="container" style="padding: 20px;">
+    <h2>Add Student</h2>
+    
+    <!-- 3. EVENT BINDING: (ngSubmit) calls the onSubmit() method when the form is submitted -->
+    <form (ngSubmit)="onSubmit()">
+        <div style="margin-bottom: 15px;">
+            <label for="name" style="display: block; margin-bottom: 5px;">Name:</label>
+            <!-- 4. TWO-WAY BINDING: [(ngModel)] syncs the input field with the 'name' property in the component -->
+            <input type="text" id="name" name="name" [(ngModel)]="name" required style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label for="age" style="display: block; margin-bottom: 5px;">Age:</label>
+            <!-- 4. TWO-WAY BINDING: [(ngModel)] syncs the input field with the 'age' property in the component -->
+            <input type="number" id="age" name="age" [(ngModel)]="age" required style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label for="course" style="display: block; margin-bottom: 5px;">Course:</label>
+            <select id="course" name="course" [(ngModel)]="course" required style="padding: 8px; width: 268px; border: 1px solid #ccc; border-radius: 4px;">
+                <option value="" disabled selected>Select Course</option>
+                <option value="CSE">CSE</option>
+                <option value="IT">IT</option>
+                <option value="AIML">AIML</option>
+                <option value="AIDS">AIDS</option>
+                <option value="CIVIL">CIVIL</option>
+                <option value="ELECTRICAL">ELECTRICAL</option>
+            </select>
+        </div>
+        
+        <!-- 2. PROPERTY BINDING: We bind the [disabled] property to a condition so the button is disabled if fields are empty -->
+        <button type="submit" [disabled]="!name || !age || !course" style="padding: 10px 20px; background-color: #27ae60; color: white; border: none; cursor: pointer; border-radius: 4px; font-weight: bold;">Add Student</button>
+    </form>
+
+    <!-- 1. INTERPOLATION: We can show a real-time preview of the student being added -->
+    <div style="margin-top: 20px; padding: 15px; background-color: #f9f9f9; border: 1px solid #eee;">
+        <h3>Real-time Preview (Interpolation Example)</h3>
+        <p><strong>Name:</strong> {{ name ? name : 'Not entered' }}</p>
+        <p><strong>Age:</strong> {{ age ? age : 'Not entered' }}</p>
+        <p><strong>Course:</strong> {{ course ? course : 'Not selected' }}</p>
+    </div>
+</div>

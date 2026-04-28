@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User API</title>
+</head>
+<body>
+
+<h2>Add User</h2>
+<input id="name" placeholder="Name">
+<input id="email" placeholder="Email">
+<input id="password" placeholder="Password">
+<input id="confirmPassword" placeholder="Confirm Password" type="password">
+
+<button onclick="addUser()">Add</button>
+
+<h2>Users List</h2>
+<button onclick="getUsers()">Load Users</button>
+<ul id="list"></ul>
+//add login section
+<h2>Login</h2>
+<input id="loginEmail" placeholder="Email">
+<input id="loginPassword" placeholder="Password" type="password">
+<button onclick="login()">Login</button>
+
+
+<script>
+async function addUser() {
+  const name = document.getElementById('name').value
+  const email = document.getElementById('email').value
+  const password = document.getElementById('password').value
+  const confirmPassword = document.getElementById('confirmPassword').value
+
+  if (password !== confirmPassword) {
+    alert("Passwords do not match")
+    return
+  }
+
+  await fetch('/users', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ name, email, password })
+  })
+
+  getUsers()
+}
+
+async function getUsers() {
+  const res = await fetch('/users')
+  const data = await res.json()
+
+  const list = document.getElementById('list')
+  list.innerHTML = ''
+
+  data.forEach(user => {
+    const li = document.createElement('li')
+    li.innerHTML = `
+      ${user.name} (${user.email})
+      <button onclick="deleteUser(${user.id})">Delete</button>
+      <button onclick="updateUser(${user.id})">Update</button>
+    `
+    list.appendChild(li)
+  })
+}
+
+async function deleteUser(id) {
+  await fetch('/users/' + id, { method: 'DELETE' })
+  getUsers()
+}
+
+async function updateUser(id) {
+  const name = prompt("Enter new name")
+  const email = prompt("Enter new email")
+
+  await fetch('/users/' + id, {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ name, email })
+  })
+
+  getUsers()
+}
+</script>
+
+</body>
+</html>
