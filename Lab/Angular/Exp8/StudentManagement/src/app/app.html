@@ -1,0 +1,10 @@
+<nav class="navbar">
+  <div class="nav-brand">Student Manager</div>
+  <ul class="nav-links">
+    <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
+    <li><a routerLink="/add-student" routerLinkActive="active" class="btn-add">Add Student</a></li>
+    <li><a routerLink="/student-list" routerLinkActive="active">Student List</a></li>
+  </ul>
+</nav>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,16 @@
+{
+  "name": "activity",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "Activity1.js",
+  "scripts": {
+    "start": "node Activity1.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

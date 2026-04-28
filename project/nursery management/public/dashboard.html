@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — NurseryPro</title>
+  <meta name="description" content="Nursery Management Admin Dashboard" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<div class="toast-container" id="toastContainer"></div>
+
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-logo-wrap" id="sidebarLogoWrap">
+        <span class="brand-icon" id="sidebarLogoEmoji">🌿</span>
+        <img id="sidebarLogoImg" src="" alt="Logo" class="brand-logo-img" style="display:none;" />
+      </div>
+      <div>
+        <h2 id="sidebarNurseryName">NurseryPro</h2>
+        <span>Management System</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-label">Main</div>
+      <div class="nav-item active" data-page="dashboard" onclick="switchPage('dashboard')">
+        <span class="nav-icon">📊</span> Dashboard
+      </div>
+      <div class="nav-item" data-page="inventory" onclick="switchPage('inventory')">
+        <span class="nav-icon">🌱</span> Plant Inventory
+      </div>
+
+      <div class="nav-label">Orders</div>
+      <div class="nav-item" data-page="create-order" onclick="switchPage('create-order')">
+        <span class="nav-icon">🛒</span> Create Order
+      </div>
+      <div class="nav-item" data-page="convert-sell" onclick="switchPage('convert-sell')">
+        <span class="nav-icon">💰</span> Convert to Sell
+        <span class="nav-badge" id="pendingBadge">0</span>
+      </div>
+      <div class="nav-item" data-page="order-history" onclick="switchPage('order-history')">
+        <span class="nav-icon">📋</span> Order History
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="admin-info">
+        <div class="admin-avatar" id="adminAvatar">A</div>
+        <div>
+          <div class="name" id="adminName">Admin</div>
+          <div class="role">Administrator</div>
+        </div>
+      </div>
+      <button class="btn btn-outline" style="width:100%;margin-bottom:8px;" onclick="openNurseryProfile()">🌿 Nursery Profile</button>
+      <button class="btn btn-outline" style="width:100%" onclick="logout()">🚪 Logout</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <div class="topbar">
+      <div class="topbar-title">
+        <h2 id="pageTitle">Dashboard</h2>
+        <p id="pageSubtitle">Welcome back to your nursery management panel</p>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-date" id="currentDate"></div>
+      </div>
+    </div>
+
+    <div class="page-content">
+
+      <!-- ═══ DASHBOARD PAGE ═══ -->
+      <section class="page-section active" id="page-dashboard">
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-card">
+            <div class="stat-icon green">🌱</div>
+            <div class="stat-info">
+              <div class="value" id="stat-plants">0</div>
+              <div class="label">Plant Types</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon blue">📦</div>
+            <div class="stat-info">
+              <div class="value" id="stat-stock">0</div>
+              <div class="label">Total Stock</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon orange">🛒</div>
+            <div class="stat-info">
+              <div class="value" id="stat-pending">0</div>
+              <div class="label">Pending Orders</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">✅</div>
+            <div class="stat-info">
+              <div class="value" id="stat-sold">0</div>
+              <div class="label">Completed Sales</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon red">💰</div>
+            <div class="stat-info">
+              <div class="value" id="stat-revenue">₹0</div>
+              <div class="label">Total Revenue</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>🕐 Recent Orders</h3>
+            <button class="btn btn-outline btn-sm" onclick="switchPage('order-history')">View All</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Customer</th>
+                  <th>Village</th>
+                  <th>Plant</th>
+                  <th>Qty</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="recentOrdersBody">
+                <tr><td colspan="8"><div class="empty-state"><div class="icon">📋</div><h3>No orders yet</h3><p>Create your first order to see it here.</p></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ INVENTORY PAGE ═══ -->
+      <section class="page-section" id="page-inventory">
+        <div class="flex-between" style="margin-bottom:20px;">
+          <div></div>
+          <button class="btn btn-primary" onclick="openAddPlantModal()">➕ Add Plant</button>
+        </div>
+
+        <div class="filters">
+          <input type="text" class="search-input" id="plantSearch" placeholder="🔍 Search plants..." oninput="renderInventory()" />
+          <select class="search-input" style="flex:0;width:160px;" id="categoryFilter" onchange="renderInventory()">
+            <option value="">All Categories</option>
+            <option value="Flower">Flower</option>
+            <option value="Fruit">Fruit</option>
+            <option value="Vegetable">Vegetable</option>
+            <option value="Tree">Tree</option>
+            <option value="Herb">Herb</option>
+            <option value="Ornamental">Ornamental</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="inventory-grid" id="inventoryGrid">
+          <div class="empty-state">
+            <div class="icon">🌱</div>
+            <h3>No plants added yet</h3>
+            <p>Click "Add Plant" to add your first plant.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ CREATE ORDER PAGE ═══ -->
+      <section class="page-section" id="page-create-order">
+        <div class="card">
+          <div class="card-header">
+            <h3>🛒 New Customer Order</h3>
+          </div>
+          <div class="card-body">
+            <form id="orderForm" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="custName">Customer Name *</label>
+                  <input type="text" id="custName" placeholder="Enter customer full name" required />
+                </div>
+                <div class="form-group">
+                  <label for="custPhone">Phone Number *</label>
+                  <input type="tel" id="custPhone" placeholder="+91 XXXXXXXXXX" required />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="custVillage">Village / Area *</label>
+                  <input type="text" id="custVillage" placeholder="Village or town name" required />
+                </div>
+                <div class="form-group">
+                  <label for="orderDate">Order Date *</label>
+                  <input type="date" id="orderDate" required />
+                </div>
+              </div>
+
+              <hr class="divider" />
+              <p class="fw-600" style="margin-bottom:12px;">🌿 Plant Details</p>
+
+              <div id="orderItems">
+                <div class="order-item" data-idx="0">
+                  <div class="form-row cols-3">
+                    <div class="form-group">
+                      <label>Plant Name *</label>
+                      <select class="plant-select" onchange="recalcOrder()">
+                        <option value="">-- Select Plant --</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Quantity *</label>
+                      <input type="number" class="qty-input" min="1" placeholder="0" oninput="recalcOrder()" />
+                    </div>
+                    <div class="form-group">
+                      <label>Unit Price (₹)</label>
+                      <input type="number" class="price-input" min="0" placeholder="Auto-filled" oninput="recalcOrder()" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-outline btn-sm mt-12" onclick="addOrderItem()">➕ Add Another Plant</button>
+
+              <hr class="divider" />
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="advancePaid">Advance Paid (₹)</label>
+                  <input type="number" id="advancePaid" min="0" placeholder="0" oninput="recalcOrder()" />
+                </div>
+                <div class="form-group">
+                  <label for="orderNotes">Notes / Remarks</label>
+                  <input type="text" id="orderNotes" placeholder="Any special instructions..." />
+                </div>
+              </div>
+
+              <!-- Payment Mode -->
+              <div class="form-group">
+                <label>Payment Mode</label>
+                <div class="payment-mode-group" id="orderPaymentModes">
+                  <label class="payment-option">
+                    <input type="radio" name="orderPayMode" value="Cash" checked onchange="toggleOrderTxnField()" />
+                    <span class="payment-pill">
+                      <span class="pill-icon">💵</span> Cash
+                    </span>
+                  </label>
+                  <label class="payment-option">
+                    <input type="radio" name="orderPayMode" value="Online" onchange="toggleOrderTxnField()" />
+                    <span class="payment-pill">
+                      <span class="pill-icon">📱</span> Online
+                    </span>
+                  </label>
+                  <label class="payment-option">
+                    <input type="radio" name="orderPayMode" value="RTGS/NEFT" onchange="toggleOrderTxnField()" />
+                    <span class="payment-pill">
+                      <span class="pill-icon">🏦</span> RTGS / NEFT
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-group txn-field" id="orderTxnWrap" style="display:none;">
+                <label for="orderTxnId">Transaction ID <span class="optional-tag">(optional)</span></label>
+                <input type="text" id="orderTxnId" placeholder="e.g. TXN123456789" autocomplete="off" />
+              </div>
+
+              <div class="bill-box" id="orderBillBox">
+                <div class="bill-row">
+                  <span>Subtotal</span>
+                  <span id="bill-subtotal">₹0.00</span>
+                </div>
+                <div class="bill-row">
+                  <span>Advance Paid</span>
+                  <span id="bill-advance">₹0.00</span>
+                </div>
+                <div class="bill-row total">
+                  <span>Remaining Amount</span>
+                  <span id="bill-remaining">₹0.00</span>
+                </div>
+              </div>
+
+              <div style="margin-top:20px; display:flex; gap:12px; justify-content:flex-end;">
+                <button type="button" class="btn btn-outline" onclick="resetOrderForm()">🔄 Reset</button>
+                <button type="submit" class="btn btn-primary" style="width:auto;">💾 Save Order</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ CONVERT TO SELL PAGE ═══ -->
+      <section class="page-section" id="page-convert-sell">
+        <div class="filters">
+          <input type="text" class="search-input" id="sellSearch" placeholder="🔍 Search pending orders..." oninput="renderPendingOrders()" />
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>⏳ Pending Orders — Ready to Sell</h3>
+            <span id="pendingCount" class="badge badge-pending">0 pending</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Customer</th>
+                  <th>Village</th>
+                  <th>Phone</th>
+                  <th>Plant(s)</th>
+                  <th>Total Amt</th>
+                  <th>Advance</th>
+                  <th>Remaining</th>
+                  <th>Order Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="pendingOrdersBody">
+                <tr><td colspan="10"><div class="empty-state"><div class="icon">🎉</div><h3>No pending orders</h3><p>All orders have been converted or no orders exist.</p></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ ORDER HISTORY PAGE ═══ -->
+      <section class="page-section" id="page-order-history">
+        <div class="filters">
+          <input type="text" class="search-input" id="historySearch" placeholder="🔍 Search orders..." oninput="renderOrderHistory()" />
+          <select class="search-input" style="flex:0;width:160px;" id="historyFilter" onchange="renderOrderHistory()">
+            <option value="">All Status</option>
+            <option value="Pending">Pending</option>
+            <option value="Sold">Sold</option>
+          </select>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>📋 All Orders</h3>
+            <button class="btn btn-outline btn-sm" onclick="exportHistory()">⬇️ Export CSV</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Customer</th>
+                  <th>Village</th>
+                  <th>Phone</th>
+                  <th>Plant(s)</th>
+                  <th>Total</th>
+                  <th>Advance</th>
+                  <th>Transport</th>
+                  <th>Total Bill</th>
+                  <th>Driver</th>
+                  <th>Vehicle</th>
+                  <th>Payment</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="historyBody">
+                <tr><td colspan="15"><div class="empty-state"><div class="icon">📋</div><h3>No orders yet</h3><p>Orders will appear here once created.</p></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /page-content -->
+  </main>
+</div>
+
+<!-- ═══ ADD PLANT MODAL ═══ -->
+<div class="modal-overlay" id="addPlantModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>🌱 Add / Edit Plant</h3>
+      <button class="modal-close" onclick="closePlantModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editPlantId" />
+      <div class="form-row">
+        <div class="form-group">
+          <label>Plant Name *</label>
+          <input type="text" id="plantName" placeholder="e.g. Rose, Mango..." />
+        </div>
+        <div class="form-group">
+          <label>Category *</label>
+          <select id="plantCategory">
+            <option value="">-- Select --</option>
+            <option>Flower</option><option>Fruit</option><option>Vegetable</option>
+            <option>Tree</option><option>Herb</option><option>Ornamental</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Quantity in Stock *</label>
+          <input type="number" id="plantQty" min="0" placeholder="0" />
+        </div>
+        <div class="form-group">
+          <label>Price per Plant (₹) *</label>
+          <input type="number" id="plantPrice" min="0" placeholder="0.00" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="plantDesc" rows="2" placeholder="Short description..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closePlantModal()">Cancel</button>
+      <button class="btn btn-primary" style="width:auto;" onclick="savePlant()">💾 Save Plant</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONVERT TO SELL MODAL ═══ -->
+<div class="modal-overlay" id="sellModal">
+  <div class="modal" style="width:620px;">
+    <div class="modal-header">
+      <h3>💰 Convert to Sell</h3>
+      <button class="modal-close" onclick="closeSellModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- Customer Info (readonly) -->
+      <div id="sellCustomerInfo" style="background:var(--bg3);border-radius:10px;padding:16px;margin-bottom:16px;">
+        <p class="fw-600" style="margin-bottom:10px;">👤 Customer Details</p>
+        <div class="form-row">
+          <div><span class="text-muted" style="font-size:12px;">Name</span><p id="sc-name" class="fw-600">—</p></div>
+          <div><span class="text-muted" style="font-size:12px;">Phone</span><p id="sc-phone" class="fw-600">—</p></div>
+        </div>
+        <div class="form-row" style="margin-top:10px;">
+          <div><span class="text-muted" style="font-size:12px;">Village</span><p id="sc-village" class="fw-600">—</p></div>
+          <div><span class="text-muted" style="font-size:12px;">Order Date</span><p id="sc-date" class="fw-600">—</p></div>
+        </div>
+        <div style="margin-top:10px;"><span class="text-muted" style="font-size:12px;">Plants Ordered</span><p id="sc-plants" class="fw-600">—</p></div>
+      </div>
+
+      <!-- Delivery Details -->
+      <p class="fw-600" style="margin-bottom:12px;">🚚 Delivery Details</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Driver Name *</label>
+          <input type="text" id="driverName" placeholder="Enter driver name" />
+        </div>
+        <div class="form-group">
+          <label>Vehicle Number *</label>
+          <input type="text" id="vehicleNo" placeholder="e.g. MH12 AB 1234" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Transport Charges (₹) <span class="text-muted" style="font-size:11px;">(Optional)</span></label>
+        <input type="number" id="transportCharges" min="0" placeholder="0 — leave blank if not applicable" oninput="recalcSellBill()" />
+      </div>
+      <div class="form-group">
+        <label>Delivery Date</label>
+        <input type="date" id="deliveryDate" />
+      </div>
+
+      <!-- Payment Mode -->
+      <div class="form-group">
+        <label>Payment Mode</label>
+        <div class="payment-mode-group" id="sellPaymentModes">
+          <label class="payment-option">
+            <input type="radio" name="sellPayMode" value="Cash" checked onchange="toggleSellTxnField()" />
+            <span class="payment-pill">
+              <span class="pill-icon">💵</span> Cash
+            </span>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="sellPayMode" value="Online" onchange="toggleSellTxnField()" />
+            <span class="payment-pill">
+              <span class="pill-icon">📱</span> Online
+            </span>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="sellPayMode" value="RTGS/NEFT" onchange="toggleSellTxnField()" />
+            <span class="payment-pill">
+              <span class="pill-icon">🏦</span> RTGS / NEFT
+            </span>
+          </label>
+        </div>
+      </div>
+      <div class="form-group txn-field" id="sellTxnWrap" style="display:none;">
+        <label for="sellTxnId">Transaction ID <span class="optional-tag">(optional)</span></label>
+        <input type="text" id="sellTxnId" placeholder="e.g. TXN123456789" autocomplete="off" />
+      </div>
+
+      <div class="form-group">
+        <label>Remarks</label>
+        <input type="text" id="sellRemarks" placeholder="Any additional notes..." />
+      </div>
+
+      <!-- Bill Summary -->
+      <div class="bill-box">
+        <p class="fw-600" style="margin-bottom:12px;">🧾 Final Bill</p>
+        <div class="bill-row">
+          <span>Order Total</span>
+          <span id="sb-total">₹0.00</span>
+        </div>
+        <div class="bill-row">
+          <span>Advance Paid</span>
+          <span id="sb-advance">₹0.00</span>
+        </div>
+        <div class="bill-row">
+          <span>Transport Charges</span>
+          <span id="sb-transport">₹0.00</span>
+        </div>
+        <div class="bill-row total">
+          <span>Remaining to Collect</span>
+          <span id="sb-remaining">₹0.00</span>
+        </div>
+        <div class="bill-row total" style="color:var(--info);">
+          <span>Grand Total Bill</span>
+          <span id="sb-grand">₹0.00</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeSellModal()">Cancel</button>
+      <button class="btn btn-success" onclick="confirmSell()">✅ Confirm Sale</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ RECEIPT MODAL ═══ -->
+<div class="modal-overlay" id="receiptModal">
+  <div class="modal receipt-modal" style="width:680px;">
+    <div class="modal-header no-print">
+      <h3>🧾 Order Receipt</h3>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button class="btn btn-primary btn-sm" onclick="printReceipt()" style="width:auto;">🖨️ Print</button>
+        <button class="modal-close" onclick="closeReceiptModal()">✕</button>
+      </div>
+    </div>
+    <div class="modal-body" id="receiptBody" style="padding:0;">
+      <!-- dynamically filled -->
+    </div>
+    <div class="modal-footer no-print">
+      <button class="btn btn-outline" onclick="closeReceiptModal()">Close</button>
+      <button class="btn btn-primary" onclick="printReceipt()" style="width:auto;">🖨️ Print Receipt</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ EDIT ORDER MODAL ═══ -->
+<div class="modal-overlay" id="editOrderModal">
+  <div class="modal" style="width:640px;">
+    <div class="modal-header">
+      <h3>✏️ Edit Order</h3>
+      <button class="modal-close" onclick="closeEditOrderModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editOrderId" />
+      <div class="form-row">
+        <div class="form-group">
+          <label>Customer Name *</label>
+          <input type="text" id="eo-name" placeholder="Full name" />
+        </div>
+        <div class="form-group">
+          <label>Phone *</label>
+          <input type="tel" id="eo-phone" placeholder="+91 XXXXXXXXXX" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Village / Area *</label>
+          <input type="text" id="eo-village" placeholder="Village or town" />
+        </div>
+        <div class="form-group">
+          <label>Order Date</label>
+          <input type="date" id="eo-date" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Notes / Remarks</label>
+        <input type="text" id="eo-notes" placeholder="Any special instructions..." />
+      </div>
+      <div class="form-group">
+        <label>Advance Paid (₹)</label>
+        <input type="number" id="eo-advance" min="0" placeholder="0" />
+      </div>
+      <div class="form-group">
+        <label>Payment Mode</label>
+        <div class="payment-mode-group">
+          <label class="payment-option">
+            <input type="radio" name="eoPayMode" value="Cash" checked onchange="toggleEoTxnField()" />
+            <span class="payment-pill"><span class="pill-icon">💵</span> Cash</span>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="eoPayMode" value="Online" onchange="toggleEoTxnField()" />
+            <span class="payment-pill"><span class="pill-icon">📱</span> Online</span>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="eoPayMode" value="RTGS/NEFT" onchange="toggleEoTxnField()" />
+            <span class="payment-pill"><span class="pill-icon">🏦</span> RTGS / NEFT</span>
+          </label>
+        </div>
+      </div>
+      <div class="form-group txn-field" id="eoTxnWrap" style="display:none;">
+        <label>Transaction ID <span class="optional-tag">(optional)</span></label>
+        <input type="text" id="eo-txnId" placeholder="e.g. TXN123456789" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeEditOrderModal()">Cancel</button>
+      <button class="btn btn-primary" style="width:auto;" onclick="saveEditedOrder()">💾 Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ NURSERY PROFILE MODAL ═══ -->
+<div class="modal-overlay" id="nurseryProfileModal">
+  <div class="modal" style="width:500px;">
+    <div class="modal-header">
+      <h3>🌿 Nursery Profile</h3>
+      <button class="modal-close" onclick="closeNurseryProfile()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="text-muted" style="font-size:13px;margin-bottom:16px;">This info appears on every printed receipt and in the sidebar.</p>
+
+      <!-- Logo Upload -->
+      <div class="form-group">
+        <label>Nursery Logo <span class="optional-tag">(optional)</span></label>
+        <div class="logo-upload-area" id="logoUploadArea" onclick="document.getElementById('np-logo-file').click()">
+          <img id="np-logo-preview" src="" alt="" style="display:none;max-height:80px;max-width:180px;border-radius:8px;" />
+          <div id="np-logo-placeholder">
+            <span style="font-size:28px;">🖼️</span>
+            <p style="font-size:12px;margin-top:6px;color:var(--text-muted);">Click to upload logo image</p>
+          </div>
+        </div>
+        <input type="file" id="np-logo-file" accept="image/*" style="display:none;" onchange="handleLogoUpload(event)" />
+        <button type="button" class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="clearLogoUpload()">✕ Remove Logo</button>
+      </div>
+
+      <div class="form-group">
+        <label>Nursery Name *</label>
+        <input type="text" id="np-name" placeholder="e.g. बजबळकर रोपवाटिका" />
+      </div>
+      <div class="form-group">
+        <label>Mobile Number *</label>
+        <input type="tel" id="np-phone" placeholder="+91 XXXXXXXXXX" />
+      </div>
+      <div class="form-group">
+        <label>Address <span class="optional-tag">(optional)</span></label>
+        <input type="text" id="np-address" placeholder="Village, District, State" />
+      </div>
+      <div class="form-group">
+        <label>Tagline <span class="optional-tag">(optional)</span></label>
+        <input type="text" id="np-tagline" placeholder="e.g. निसर्गाची सेवा, आपल्या दारी" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeNurseryProfile()">Cancel</button>
+      <button class="btn btn-primary" style="width:auto;" onclick="saveNurseryProfile()">💾 Save Profile</button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/store.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/inventory.js"></script>
+<script src="/js/orders.js"></script>
+<script src="/js/sell.js"></script>
+</body>
+</html>

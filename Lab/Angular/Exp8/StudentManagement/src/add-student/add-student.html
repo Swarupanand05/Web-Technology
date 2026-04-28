@@ -1,0 +1,14 @@
+<div class="container" style="padding: 20px;">
+    <h2>Add Student</h2>
+    <form (ngSubmit)="onSubmit()">
+        <div style="margin-bottom: 15px;">
+            <label for="name" style="display: block; margin-bottom: 5px;">Name:</label>
+            <input type="text" id="name" name="name" [(ngModel)]="name" required style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label for="age" style="display: block; margin-bottom: 5px;">Age:</label>
+            <input type="number" id="age" name="age" [(ngModel)]="age" required style="padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 4px;">
+        </div>
+        <button type="submit" style="padding: 10px 20px; background-color: #27ae60; color: white; border: none; cursor: pointer; border-radius: 4px; font-weight: bold;">Add Student</button>
+    </form>
+</div>

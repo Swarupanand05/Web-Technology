@@ -1,0 +1,85 @@
+//angular is typescript based framework used for web application
+//angular is single page application(SPA)
+
+CLI-Command line interface
+
+Steps to install Angular 
+1)open folder 
+2) Enter command npm install -g @angular/CLI
+3)After that packages are installed
+4)NOw we have to create our project
+5) to create a  project use command
+        =>ng new project-name
+
+ng serve -o is used to run angular command
+
+//port number for angular https://localhost:4200
+
+package.json:
+    its a configuration file . informaation about your project
+
+package-lock.json:
+        its also configuration file but its contain detailed informaation
+
+Angular.json:
+    project congiguration file
+
+style.css:
+    globally css for whole application
+
+.gitignore:
+    is version control file
+
+.editconfig:
+    to changes the styling of css
+
+index.html:
+    Main HTML file that loads angular
+
+main.ts:
+    Entry point of application
+
+
+
+
+componets is a UI blocks  of structure.
+when we create componenets . Componets create 4 file=>html,css,ts,spec.ts
+
+
+Create component in Angular
+    => ng g c componentName
+
+
+Data binding:
+    there are two types of data binding
+        oneway=>
+        type                       syntax                               purpose
+    interpolation            {{value}}                        
+    propery                  [property]="value"
+    event                    (event)="handler()"
+    two-way                [(ngmodel)]
+
+    databinding is connect UI to code
+
+
+//directives have two type
+directives means thinks of directives like magic wands. that can change your web page without redirective
+1)stuctural directives
+2)attribute directives
+
+1)Stuctural:
+    for, if-else,switch these loops are included in stuctural.
+    change the stucture of your page like add, remove and repeated things
+
+
+2)attribute:
+    change the look or style .
+
+
+    1)Activity
+        Study about directives.with examples
+
+
+
+Routing:
+    

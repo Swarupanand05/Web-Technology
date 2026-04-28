@@ -1,0 +1,24 @@
+<div class="container" style="padding: 20px;">
+    <h2>Student List</h2>
+    
+    @if (students().length === 0) {
+        <p>No students found. Please add a student.</p>
+    } @else {
+        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Name</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Age</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (student of students(); track $index) {
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{ student.name }}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{ student.age }}</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
